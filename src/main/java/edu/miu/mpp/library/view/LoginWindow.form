@@ -7,7 +7,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="e007d" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
+      <grid id="e007d" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
         <constraints border-constraint="North"/>
         <properties/>
         <border type="none"/>
@@ -15,7 +15,11 @@
           <component id="5a9e6" class="javax.swing.JLabel">
             <constraints/>
             <properties>
-              <text value="Login"/>
+              <alignmentX value="0.0"/>
+              <alignmentY value="0.0"/>
+              <autoscrolls value="false"/>
+              <maximumSize width="40" height="16"/>
+              <text value="LOGIN"/>
             </properties>
           </component>
         </children>
@@ -70,7 +74,7 @@
           <hspacer id="7d0ae">
             <constraints>
               <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.2" weighty="0.0"/>
+              <gridbag weightx="0.01" weighty="0.0"/>
             </constraints>
           </hspacer>
           <vspacer id="69f8a">
@@ -87,11 +91,14 @@
           </vspacer>
           <component id="9ec69" class="javax.swing.JButton" binding="loginButton" default-binding="true">
             <constraints>
-              <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0" ipadx="20"/>
+              <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
             </constraints>
             <properties>
+              <alignmentY value="0.0"/>
               <text value="Login"/>
+              <verticalAlignment value="0"/>
+              <verticalTextPosition value="0"/>
             </properties>
           </component>
         </children>
