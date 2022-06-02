@@ -1,0 +1,14 @@
+package edu.miu.mpp.library.dao;
+
+import edu.miu.mpp.library.model.Book;
+import edu.miu.mpp.library.model.LibraryMember;
+import edu.miu.mpp.library.model.User;
+
+import java.util.Map;
+
+public interface DataAccess {
+	Map<String, Book> readBooksMap();
+	Map<String, User> readUserMap();
+	Map<String, LibraryMember> readMemberMap();
+	void saveNewMember(LibraryMember member);
+}

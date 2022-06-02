@@ -1,0 +1,20 @@
+package edu.miu.mpp.library.controller;
+
+import edu.miu.mpp.library.exception.LoginException;
+import edu.miu.mpp.library.model.Role;
+import edu.miu.mpp.library.model.Book;
+import edu.miu.mpp.library.model.LibraryMember;
+
+import java.util.Map;
+
+/**
+ * This controller is to accept all requests from the UI
+ */
+public interface FrontController {
+    Role login(String username, char[] password) throws LoginException;
+
+    Map<String, Book> getAllBooks();
+
+    Map<String, LibraryMember> getAllLibraryMembers();
+
+}
