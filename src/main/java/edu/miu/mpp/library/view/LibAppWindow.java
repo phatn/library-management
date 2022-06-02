@@ -29,8 +29,6 @@ public class LibAppWindow extends JFrame {
 
     private Role role;
 
-    private String userName;
-
     JPanel cards;
     JList<ListItem> linkList;
 
@@ -182,7 +180,6 @@ public class LibAppWindow extends JFrame {
             JOptionPane.showMessageDialog(this, "Password field must be non empty");
         } else {
             try {
-                this.userName = username;
                 this.role = loginService.login(username, password);
                 statusBar.setText(String.format(Strings.WELCOME, username));
                 addComponents();
