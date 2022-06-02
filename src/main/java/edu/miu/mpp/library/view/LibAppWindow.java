@@ -138,13 +138,11 @@ public class LibAppWindow extends JFrame {
         linkList.addListSelectionListener(event -> {
             String value = linkList.getSelectedValue().getItemName();
             if (value == Strings.LOG_OUT.toString()) {
-                int opt = JOptionPane.showConfirmDialog(mainPanel, Strings.LOG_OUT_MESS.toString(), Strings.LOG_OUT_TITLE.toString(), JOptionPane.YES_NO_OPTION);
-                if (opt == 0) {
-                    removeComponents();
-                }
+                handleLogout();
+            } else {
+                boolean allowed = linkList.getSelectedValue().getHighlight();
+                cl.show(cards, value);
             }
-            boolean allowed = linkList.getSelectedValue().getHighlight();
-            cl.show(cards, value);
         });
 
         JSplitPane innerPane
@@ -156,12 +154,17 @@ public class LibAppWindow extends JFrame {
         add(outerPane, BorderLayout.CENTER);
     }
 
+    private void handleLogout() {
+        int opt = JOptionPane.showConfirmDialog(mainPanel, Strings.LOG_OUT_MESS.toString(), Strings.LOG_OUT_TITLE.toString(), JOptionPane.YES_NO_OPTION);
+        if (opt == 0) {
+            cards.removeAll();
+            cards.invalidate();
+            cards.repaint();
+        }
+    }
+
     public void removeComponents() {
-        cards.removeAll();
-        cards.invalidate();
-        LoginWindow loginWindow = new LoginWindow(this);
-        cards.add(loginWindow.getMainPane());
-        cards.repaint();
+
     }
 
     private void createUIComponents() {
