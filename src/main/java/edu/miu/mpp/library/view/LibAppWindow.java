@@ -1,6 +1,11 @@
 package edu.miu.mpp.library.view;
 
+import edu.miu.mpp.library.exception.LoginException;
 import edu.miu.mpp.library.model.ListItem;
+import edu.miu.mpp.library.model.Role;
+import edu.miu.mpp.library.service.LoginService;
+import edu.miu.mpp.library.service.ServiceFactory;
+import edu.miu.mpp.library.util.Strings;
 import edu.miu.mpp.library.util.Util;
 
 import javax.swing.*;
@@ -25,9 +30,11 @@ public class LibAppWindow extends JFrame {
     JPanel cards;
     JList<ListItem> linkList;
 
-    ListItem checkoutItem = new ListItem("Checkout", true);
-    ListItem addMemberItem = new ListItem("Add Member", false);
-    ListItem addBookCopyItem = new ListItem("Add Book Copy", false);
+    ListItem checkoutItem = new ListItem(Strings.CHECK_OUT.toString(), true);
+    ListItem addMemberItem = new ListItem(Strings.ADD_MEMBER.toString(), false);
+    ListItem addBookCopyItem = new ListItem(Strings.ADD_BOOK_COPY.toString(), false);
+
+    ListItem logoutItem = new ListItem(Strings.LOG_OUT.toString(), true);
 
     ListItem[] sellerItems = {checkoutItem, addMemberItem};
     ListItem[] memberItems = {checkoutItem, addBookCopyItem};
@@ -48,7 +55,9 @@ public class LibAppWindow extends JFrame {
         this.linkList = linkList;
     }
 
-    public static JTextArea statusBar = new JTextArea("Welcome to the MPP Library!");
+    public static JTextArea statusBar = new JTextArea(Strings.WELCOME.toString());
+
+    private LoginService loginService = (LoginService) ServiceFactory.getServiceInstance(LoginService.class);
 
     public LibAppWindow() {
         cards = new JPanel();
@@ -64,6 +73,7 @@ public class LibAppWindow extends JFrame {
         model.addElement(checkoutItem);
         model.addElement(addBookCopyItem);
         model.addElement(addMemberItem);
+        model.addElement(logoutItem);
 
         linkList = new JList<>(model);
         linkList.setCellRenderer(new DefaultListCellRenderer() {
@@ -84,7 +94,7 @@ public class LibAppWindow extends JFrame {
                         setForeground(Util.LINK_NOT_AVAILABLE);
                     }
                     if (isSelected) {
-                        setForeground(Color.BLACK);
+                        setForeground(Util.DARK_BLUE);
                         setBackground(new Color(236, 243, 245));
                         setBackground(Color.WHITE);
                     }
@@ -127,9 +137,14 @@ public class LibAppWindow extends JFrame {
         CardLayout cl = (CardLayout) (cards.getLayout());
         linkList.addListSelectionListener(event -> {
             String value = linkList.getSelectedValue().getItemName();
+            if (value == Strings.LOG_OUT.toString()) {
+                int opt = JOptionPane.showConfirmDialog(mainPanel, Strings.LOG_OUT_MESS.toString(), Strings.LOG_OUT_TITLE.toString(), JOptionPane.YES_NO_OPTION);
+                if (opt == 0) {
+                    removeComponents();
+                }
+            }
             boolean allowed = linkList.getSelectedValue().getHighlight();
             cl.show(cards, value);
-
         });
 
         JSplitPane innerPane
@@ -142,10 +157,29 @@ public class LibAppWindow extends JFrame {
     }
 
     public void removeComponents() {
-
+        cards.removeAll();
+        cards.invalidate();
+        LoginWindow loginWindow = new LoginWindow(this);
+        cards.add(loginWindow.getMainPane());
+        cards.repaint();
     }
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
+    }
+
+    public void authenUser(String username, char[] password) {
+        if (username.length() == 0) {
+            JOptionPane.showMessageDialog(this, "Username field must be non empty");
+        } else if (password.length == 0) {
+            JOptionPane.showMessageDialog(this, "Password field must be non empty");
+        } else {
+            try {
+                Role role = loginService.login(username, password);
+                addComponents();
+            } catch (LoginException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
+        }
     }
 }

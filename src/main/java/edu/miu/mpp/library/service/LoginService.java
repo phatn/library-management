@@ -11,7 +11,7 @@ public class LoginService extends AbstractService {
     public Role login(String username, char[] password) throws LoginException {
         Map<String, User> map = dataAccess.readUserMap();
         if(!map.containsKey(username)) {
-            throw new LoginException("Username " + username + " not found");
+            throw new LoginException("Username " + username + " not exist");
         }
         char[] passwordFound = map.get(username).getPassword();
 
