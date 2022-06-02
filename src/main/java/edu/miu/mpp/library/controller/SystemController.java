@@ -30,4 +30,14 @@ public class SystemController implements FrontController {
     public Map<String, LibraryMember> getAllLibraryMembers() {
         return libraryMemberService.findAllLibraryMembers();
     }
+
+    @Override
+    public void addNewLibraryMember(LibraryMember libraryMember) {
+        libraryMemberService.addOrUpdateNewLibraryMember(libraryMember);
+    }
+
+    @Override
+    public void deleteLibraryMember(String memberId) {
+        libraryMemberService.deleteLibraryMember(memberId);
+    }
 }

@@ -31,7 +31,13 @@ public class DataAccessFacade implements DataAccess {
 		mems.put(memberId, member);
 		saveToStorage(StorageType.MEMBERS, mems);	
 	}
-	
+
+	public void deleteMember(String memberId) {
+		Map<String, LibraryMember> mems = readMemberMap();
+		mems.remove(memberId);
+		saveToStorage(StorageType.MEMBERS, mems);
+	}
+
 	@SuppressWarnings("unchecked")
 	public  Map<String, Book> readBooksMap() {
 		//Returns a Map with name/value pairs being

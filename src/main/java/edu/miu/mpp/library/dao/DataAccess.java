@@ -11,4 +11,5 @@ public interface DataAccess {
 	Map<String, User> readUserMap();
 	Map<String, LibraryMember> readMemberMap();
 	void saveNewMember(LibraryMember member);
+	void deleteMember(String memberId);
 }

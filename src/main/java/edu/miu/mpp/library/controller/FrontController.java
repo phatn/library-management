@@ -17,4 +17,7 @@ public interface FrontController {
 
     Map<String, LibraryMember> getAllLibraryMembers();
 
+    void addNewLibraryMember(LibraryMember libraryMember);
+
+    void deleteLibraryMember(String memberId);
 }
