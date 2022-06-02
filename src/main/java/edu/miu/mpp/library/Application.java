@@ -4,14 +4,8 @@ import edu.miu.mpp.library.view.LibAppWindow;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-
 public class Application {
-    public static final String OUTPUT_DIR = System.getProperty("user.dir")
-            + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + "edu"
-            + File.separator + "miu" + File.separator + "mpp" + File.separator + "library" + File.separator + "dao" + File.separator + "storage";
     public static void main(String[] args) {
-        System.out.println(OUTPUT_DIR);
         SwingUtilities.invokeLater(() -> {
             LibAppWindow libAppWindow = new LibAppWindow();
             libAppWindow.setSize(400, 200);
