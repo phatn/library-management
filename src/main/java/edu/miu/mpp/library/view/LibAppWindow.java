@@ -27,6 +27,8 @@ public class LibAppWindow extends JFrame {
         return cards;
     }
 
+    private Role role;
+
     JPanel cards;
     JList<ListItem> linkList;
 
@@ -74,8 +76,10 @@ public class LibAppWindow extends JFrame {
         model.addElement(addBookCopyItem);
         model.addElement(addMemberItem);
         model.addElement(logoutItem);
-
+        int begin = 0;
+        int end = 0;
         linkList = new JList<>(model);
+        linkList.setSelectionInterval(begin, end);
         linkList.setCellRenderer(new DefaultListCellRenderer() {
 
             @SuppressWarnings("rawtypes")
@@ -89,13 +93,12 @@ public class LibAppWindow extends JFrame {
                     ListItem nextItem = (ListItem) value;
                     setText(nextItem.getItemName());
                     if (nextItem.getHighlight()) {
-                        setForeground(Util.LINK_AVAILABLE);
+                        if (isSelected) {
+                            setForeground(Color.WHITE);
+                            setBackground(Util.DARK_BLUE);
+                        }
                     } else {
                         setForeground(Util.LINK_NOT_AVAILABLE);
-                    }
-                    if (isSelected) {
-                        setForeground(Util.DARK_BLUE);
-                        setBackground(new Color(236, 243, 245));
                         setBackground(Color.WHITE);
                     }
                 }
@@ -140,6 +143,9 @@ public class LibAppWindow extends JFrame {
             if (value == Strings.LOG_OUT.toString()) {
                 handleLogout();
             } else {
+                if (!isAccessAllMenu(value)) {
+                    return;
+                }
                 boolean allowed = linkList.getSelectedValue().getHighlight();
                 cl.show(cards, value);
             }
@@ -153,7 +159,7 @@ public class LibAppWindow extends JFrame {
         outerPane.setDividerLocation(350);
         add(outerPane, BorderLayout.CENTER);
     }
-
+    
     private void handleLogout() {
         int opt = JOptionPane.showConfirmDialog(mainPanel, Strings.LOG_OUT_MESS.toString(), Strings.LOG_OUT_TITLE.toString(), JOptionPane.YES_NO_OPTION);
         if (opt == 0) {
@@ -178,11 +184,24 @@ public class LibAppWindow extends JFrame {
             JOptionPane.showMessageDialog(this, "Password field must be non empty");
         } else {
             try {
-                Role role = loginService.login(username, password);
+                this.role = loginService.login(username, password);
                 addComponents();
+                setMenuWithRole();
             } catch (LoginException e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
             }
         }
+    }
+
+    private void setMenuWithRole() {
+        addMemberItem.setHighlight(this.role != Role.LIBRARIAN);
+        addBookCopyItem.setHighlight(this.role != Role.LIBRARIAN);
+    }
+
+    private boolean isAccessAllMenu(String value) {
+        if (role == Role.LIBRARIAN && (value == Strings.ADD_BOOK_COPY.toString()) || value == Strings.ADD_MEMBER.toString()) {
+            return false;
+        }
+        return true;
     }
 }
