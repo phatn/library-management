@@ -1,7 +1,11 @@
 package edu.miu.mpp.library.model;
 
-public class User {
+import java.io.Serializable;
+import java.util.Arrays;
 
+public class User implements Serializable {
+
+    private static final long serialVersionUID = 5147265048973262104L;
     private String username;
 
     private char[] password;
@@ -36,5 +40,14 @@ public class User {
 
     public void setAuthorization(Role authorization) {
         this.authorization = authorization;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password=" + Arrays.toString(password) +
+                ", authorization=" + authorization +
+                '}';
     }
 }

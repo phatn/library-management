@@ -1,26 +1,17 @@
 package edu.miu.mpp.library.model;
 
-public class Author {
-    private String firstName;
-    private String lastName;
+import java.io.Serializable;
 
-    public Author(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-    public String getFirstName() {
-        return firstName;
+final public class Author extends Person implements Serializable {
+    private String bio;
+    public String getBio() {
+        return bio;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public Author(String f, String l, String t, Address a, String bio) {
+        super(f, l, t, a);
+        this.bio = bio;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+    private static final long serialVersionUID = 7508481940058530471L;
 }

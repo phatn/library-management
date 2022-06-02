@@ -37,8 +37,8 @@ public class Data {
     public static List<User> logins = new ArrayList<>() {
     	
     	{
-           add(new User("Joe", "111".toCharArray(), Role.SELLER));
-           add(new User("Ann", "101".toCharArray(), Role.MEMBER));
+           add(new User("Joe", "111".toCharArray(), Role.LIBRARIAN));
+           add(new User("Ann", "101".toCharArray(), Role.ADMIN));
            add(new User("Dave", "102".toCharArray(), Role.BOTH));
     	}
     };
