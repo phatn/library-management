@@ -1,20 +1,20 @@
 package edu.miu.mpp.library.view;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class LoginWindow {
     private JPanel mainPane;
-    private JTextField textField1;
-    private JPasswordField passwordField1;
+    private JTextField tfUserName;
+    private JPasswordField tfPassword;
     private JButton loginButton;
 
     private LibAppWindow libAppWindow;
 
     public LoginWindow(LibAppWindow libAppWindow) {
         this.libAppWindow = libAppWindow;
-        loginButton.addActionListener(e -> libAppWindow.addComponents());
+        loginButton.addActionListener(e ->
+                libAppWindow.authenUser(tfUserName.getText().trim(), tfPassword.getPassword())
+        );
     }
 
     public LibAppWindow getLibAppWindow() {
