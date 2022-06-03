@@ -8,4 +8,8 @@ public class BookService extends AbstractService {
     public Map<String, Book> findAllBooks() {
         return dataAccess.readBooksMap();
     }
+
+    public void saveBooks(Map<String, Book> books) {
+        dataAccess.saveBooksMap(books);
+    }
 }

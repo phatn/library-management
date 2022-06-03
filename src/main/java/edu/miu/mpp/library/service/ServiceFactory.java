@@ -10,8 +10,8 @@ public class ServiceFactory {
 
     static {
         register(LoginService.class, new LoginService());
-        register(BookService.class, new LoginService());
-        register(LibraryMemberService.class, new LoginService());
+        register(BookService.class, new BookService());
+        register(LibraryMemberService.class, new LibraryMemberService());
     }
     public static void register(Class<? extends Service> serviceClass, Service service) {
         SERVICE_MAP.put(serviceClass, service);

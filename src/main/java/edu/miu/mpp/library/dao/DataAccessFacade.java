@@ -44,6 +44,10 @@ public class DataAccessFacade implements DataAccess {
 		//   isbn -> Book
 		return (HashMap<String,Book>) readFromStorage(StorageType.BOOKS);
 	}
+
+	public void saveBooksMap(Map<String, Book> bookMap) {
+		saveToStorage(StorageType.BOOKS, bookMap);
+	}
 	
 	@SuppressWarnings("unchecked")
 	public Map<String, LibraryMember> readMemberMap() {

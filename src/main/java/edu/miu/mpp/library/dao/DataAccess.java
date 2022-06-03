@@ -8,6 +8,7 @@ import java.util.Map;
 
 public interface DataAccess {
 	Map<String, Book> readBooksMap();
+	void saveBooksMap(Map<String, Book> bookMap);
 	Map<String, User> readUserMap();
 	Map<String, LibraryMember> readMemberMap();
 	void saveNewMember(LibraryMember member);
