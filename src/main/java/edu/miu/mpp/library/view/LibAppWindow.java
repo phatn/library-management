@@ -157,6 +157,7 @@ public class LibAppWindow extends JFrame {
             innerPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, linkList, cards);
             innerPane.setDividerLocation(180);
             outerPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, innerPane, statusBar);
+            outerPane.setResizeWeight(1);
             outerPane.setDividerLocation(100);
             this.add(outerPane, BorderLayout.CENTER);
         } else {
