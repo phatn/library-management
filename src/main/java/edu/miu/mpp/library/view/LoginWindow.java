@@ -8,9 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
 public class LoginWindow implements ActionListener, KeyListener, DocumentListener{
     private JPanel mainPane;
     private JTextField tfUserName;
@@ -26,6 +23,8 @@ public class LoginWindow implements ActionListener, KeyListener, DocumentListene
         this.libAppWindow = libAppWindow;
         // add the listener to the textField
         loginButton.addKeyListener(this);
+        tfPassword.addKeyListener(this);
+        tfUserName.addKeyListener(this);
         loginButton.addActionListener(e ->
                 libAppWindow.authenUser(tfUserName.getText().trim(), tfPassword.getPassword())
         );
