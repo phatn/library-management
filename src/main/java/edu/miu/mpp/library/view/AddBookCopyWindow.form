@@ -89,7 +89,9 @@
             <properties>
               <minimumSize width="17" height="100"/>
             </properties>
-            <border type="none"/>
+            <border type="line">
+              <color color="-4473925"/>
+            </border>
             <children>
               <component id="c4040" class="javax.swing.JTable" binding="bookTable">
                 <constraints/>

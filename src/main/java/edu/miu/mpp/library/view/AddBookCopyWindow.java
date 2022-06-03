@@ -10,6 +10,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import java.awt.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,6 +47,11 @@ public class AddBookCopyWindow {
         // Disable editing on tables
         bookTable.setDefaultEditor(Object.class, null);
         copyTable.setDefaultEditor(Object.class, null);
+        // Show cell border
+        bookTable.setShowGrid(true);
+        bookTable.setGridColor(Color.GRAY);
+        copyTable.setShowGrid(true);
+        copyTable.setGridColor(Color.GRAY);
 
         addCopyButton.setEnabled(false);
 
