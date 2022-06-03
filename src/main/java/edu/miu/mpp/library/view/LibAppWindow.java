@@ -77,17 +77,25 @@ public class LibAppWindow extends JFrame {
 
     public void createLinkLabels() {
         DefaultListModel<ListItem> model = new DefaultListModel<>();
-        model.addElement(checkoutItem);
-        model.addElement(addBookCopyItem);
-        model.addElement(addMemberItem);
-        model.addElement(checkBookCopyItem);
-        model.addElement(addBookItem);
+        if (role == Role.LIBRARIAN) {
+            model.addElement(checkoutItem);
+            model.addElement(checkBookCopyItem);
+        } else if (role == Role.ADMIN) {
+            model.addElement(addMemberItem);
+            model.addElement(addBookItem);
+            model.addElement(addBookCopyItem);
+        } else {
+            model.addElement(checkoutItem);
+            model.addElement(checkBookCopyItem);
+            model.addElement(addMemberItem);
+            model.addElement(addBookItem);
+            model.addElement(addBookCopyItem);
+        }
         model.addElement(logoutItem);
-
-        int begin = 0;
-        int end = 0;
         linkList = new JList<>(model);
         // selected first item in list
+        int begin = 0;
+        int end = 0;
         linkList.setSelectionInterval(begin, end);
         linkList.setCellRenderer(new DefaultListCellRenderer() {
 
@@ -101,14 +109,9 @@ public class LibAppWindow extends JFrame {
                 if (value instanceof ListItem) {
                     ListItem nextItem = (ListItem) value;
                     setText(nextItem.getItemName());
-                    if (nextItem.getHighlight()) {
-                        if (isSelected) {
-                            setForeground(Color.WHITE);
-                            setBackground(Util.DARK_BLUE);
-                        }
-                    } else {
-                        setForeground(Util.LINK_NOT_AVAILABLE);
-                        setBackground(Color.WHITE);
+                    if (isSelected) {
+                        setForeground(Color.WHITE);
+                        setBackground(Util.DARK_BLUE);
                     }
                 }
                 return c;
@@ -147,9 +150,6 @@ public class LibAppWindow extends JFrame {
     }
 
     public void addComponents() {
-        cards.removeAll();
-        cards.invalidate();
-        cards.repaint();
         Util.adjustLabelFont(statusBar, Util.DARK_BLUE, true);
         setSize(1000, 800);
         createLinkLabels();
@@ -160,9 +160,6 @@ public class LibAppWindow extends JFrame {
             if (value == Strings.LOG_OUT.toString()) {
                 handleLogout();
             } else {
-                if (!isAccessAllMenu(value)) {
-                    return;
-                }
                 boolean allowed = linkList.getSelectedValue().getHighlight();
                 cl.show(cards, value);
             }
@@ -185,9 +182,7 @@ public class LibAppWindow extends JFrame {
     private void handleLogout() {
         int opt = JOptionPane.showConfirmDialog(mainPanel, Strings.LOG_OUT_MESS, Strings.LOG_OUT_TITLE, JOptionPane.YES_NO_OPTION);
         if (opt == 0) {
-            cards.removeAll();
-            cards.invalidate();
-            cards.repaint();
+            removeComponents();
             innerPane.setLeftComponent(null);
             outerPane.setRightComponent(null);
             setSize(400, 200);
@@ -197,7 +192,9 @@ public class LibAppWindow extends JFrame {
     }
 
     public void removeComponents() {
-
+        cards.removeAll();
+        cards.invalidate();
+        cards.repaint();
     }
 
     private void createUIComponents() {
@@ -209,25 +206,11 @@ public class LibAppWindow extends JFrame {
             try {
                 this.role = systemController.login(username, password);
                 statusBar.setText(String.format(Strings.WELCOME, username));
+                removeComponents();
                 addComponents();
-                setMenuWithRole();
             } catch (LoginException e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
             }
         }
-    }
-
-    private void setMenuWithRole() {
-        addMemberItem.setHighlight(this.role != Role.LIBRARIAN);
-        addBookCopyItem.setHighlight(this.role != Role.LIBRARIAN);
-        addBookItem.setHighlight(this.role != Role.LIBRARIAN);
-    }
-
-    private boolean isAccessAllMenu(String value) {
-        if (role == Role.LIBRARIAN &&
-                (value.equals(Strings.ADD_BOOK) || value.equals(Strings.ADD_BOOK_COPY) || value.equals(Strings.ADD_MEMBER))) {
-            return false;
-        }
-        return true;
     }
 }
