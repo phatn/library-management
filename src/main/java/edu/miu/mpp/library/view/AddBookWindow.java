@@ -145,6 +145,7 @@ public class AddBookWindow implements MessageableWindow {
         systemController.saveBooks(bookMap);
         displayInfo("Book added.");
         getBooks();
+        clearInputs();
     }
 
     private boolean isValidIsbn(String isbn) {
@@ -161,6 +162,12 @@ public class AddBookWindow implements MessageableWindow {
         }
 
         return false;
+    }
+
+    private void clearInputs() {
+        isbnTxt.setText("");
+        titleTxt.setText("");
+        authorList.clearSelection();
     }
 
     @Override
