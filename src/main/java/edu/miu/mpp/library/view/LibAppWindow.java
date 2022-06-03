@@ -1,5 +1,6 @@
 package edu.miu.mpp.library.view;
 
+import edu.miu.mpp.library.controller.FrontController;
 import edu.miu.mpp.library.controller.SystemController;
 import edu.miu.mpp.library.exception.LoginException;
 import edu.miu.mpp.library.model.ListItem;
@@ -58,13 +59,12 @@ public class LibAppWindow extends JFrame {
 
     public static JTextArea statusBar = new JTextArea(Strings.WELCOME);
 
-    private SystemController systemController;
+    private final FrontController systemController = new SystemController();
 
     private JSplitPane innerPane;
     private JSplitPane outerPane;
 
     public LibAppWindow() {
-        systemController = new SystemController();
         cards = new JPanel();
         cards.setLayout(new BorderLayout());
         LoginWindow loginWindow = new LoginWindow(this);
