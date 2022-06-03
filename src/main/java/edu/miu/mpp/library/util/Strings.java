@@ -12,4 +12,21 @@ public class Strings {
     public static final String ERROR_PASSWORD_BLANK = "Password field must be non empty!";
     public static final String ERROR_PASSWORD_WRONG = "Password incorrect!";
     public static final String ERROR_USERNAME_WRONG = "Username %s not exist!";
+
+    //add library member
+    public static final String SUCCESS_ADD_MEMBER = "Member %s is added success!";
+    public static final String SUCCESS_DELETE_MEMBER = "Member %s is deleted success!";
+    public static final String FAIL_ADD_MEMBER_BLANK = "%s field must be non empty!";
+    public static final String FAIL_ADD_MEMBER_MUST_NUMBER_ONLY = "%s field must be number only!";
+    public static final String FAIL_ADD_MEMBER_MUST_WORD_ONLY = "%s field must be word only!";
+    public static final String MEMBER_ID = "Member Id";
+    public static final String FIRST_NAME = "First name";
+    public static final String LASTNAME = "Last name";
+    public static final String STREET = "Street";
+    public static final String STATE = "State";
+    public static final String CITY = "City";
+    public static final String ZIP = "Zip";
+    public static final String PHONE_NUMBER = "Telephone number";
+    public static final String DELETE_TITLE = "DELETE LIBRARY MEMBER";
+    public static final String DELETE_MESS = "Do you want to delete memberId %s?";
 }
