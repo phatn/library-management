@@ -1,6 +1,7 @@
 package edu.miu.mpp.library.view;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class LoginWindow {
     private JPanel mainPane;
@@ -36,4 +37,5 @@ public class LoginWindow {
     private void createUIComponents() {
         // TODO: place custom component creation code here
     }
+
 }
