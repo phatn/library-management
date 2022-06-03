@@ -157,7 +157,7 @@ public class LibAppWindow extends JFrame {
             innerPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, linkList, cards);
             innerPane.setDividerLocation(180);
             outerPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, innerPane, statusBar);
-            outerPane.setDividerLocation(350);
+            outerPane.setDividerLocation(100);
             this.add(outerPane, BorderLayout.CENTER);
         } else {
             innerPane.setLeftComponent(linkList);
@@ -190,9 +190,9 @@ public class LibAppWindow extends JFrame {
 
     public void authenUser(String username, char[] password) {
         if (username.length() == 0) {
-            JOptionPane.showMessageDialog(this, "Username field must be non empty");
+            JOptionPane.showMessageDialog(this, Strings.ERROR_USERNAME_BLANK);
         } else if (password.length == 0) {
-            JOptionPane.showMessageDialog(this, "Password field must be non empty");
+            JOptionPane.showMessageDialog(this, Strings.ERROR_PASSWORD_BLANK);
         } else {
             try {
                 this.role = loginService.login(username, password);
