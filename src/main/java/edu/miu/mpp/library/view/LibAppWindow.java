@@ -61,6 +61,9 @@ public class LibAppWindow extends JFrame {
 
     private LoginService loginService = (LoginService) ServiceFactory.getServiceInstance(LoginService.class);
 
+    private JSplitPane innerPane;
+    private JSplitPane outerPane;
+
     public LibAppWindow() {
         cards = new JPanel();
         cards.setLayout(new BorderLayout());
@@ -150,18 +153,30 @@ public class LibAppWindow extends JFrame {
             }
         });
 
-        JSplitPane innerPane
-                = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, linkList, cards);
-        innerPane.setDividerLocation(180);
-        JSplitPane outerPane
-                = new JSplitPane(JSplitPane.VERTICAL_SPLIT, innerPane, statusBar);
-        outerPane.setDividerLocation(350);
-        add(outerPane, BorderLayout.CENTER);
+        if (innerPane == null && outerPane == null) {
+            innerPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, linkList, cards);
+            innerPane.setDividerLocation(180);
+            outerPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, innerPane, statusBar);
+            outerPane.setDividerLocation(350);
+            this.add(outerPane, BorderLayout.CENTER);
+        } else {
+            innerPane.setLeftComponent(linkList);
+            innerPane.setDividerLocation(180);
+            outerPane.setRightComponent(statusBar);
+        }
     }
 
     private void handleLogout() {
         int opt = JOptionPane.showConfirmDialog(mainPanel, Strings.LOG_OUT_MESS, Strings.LOG_OUT_TITLE, JOptionPane.YES_NO_OPTION);
         if (opt == 0) {
+            cards.removeAll();
+            cards.invalidate();
+            cards.repaint();
+            innerPane.setLeftComponent(null);
+            outerPane.setRightComponent(null);
+            setSize(400, 200);
+            LoginWindow loginWindow = new LoginWindow(this);
+            cards.add(loginWindow.getMainPane(), BorderLayout.CENTER);
         }
     }
 
@@ -196,7 +211,7 @@ public class LibAppWindow extends JFrame {
     }
 
     private boolean isAccessAllMenu(String value) {
-        if (role == Role.LIBRARIAN && (value == Strings.ADD_BOOK_COPY) || value == Strings.ADD_MEMBER) {
+        if (role == Role.LIBRARIAN && (value == Strings.ADD_BOOK_COPY || value == Strings.ADD_MEMBER)) {
             return false;
         }
         return true;
