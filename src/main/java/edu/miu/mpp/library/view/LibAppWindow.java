@@ -134,11 +134,16 @@ public class LibAppWindow extends JFrame {
         AddBookWindow addBookWindow = new AddBookWindow();
         JPanel addBookPanel = addBookWindow.getMainPanel();
 
+        // Add Book Copy Window
+        DueDateBookCopyWindow dueDateBookCopyWindow = new DueDateBookCopyWindow();
+        JPanel dueDateBookCopyPanel = dueDateBookCopyWindow.getMainPanel();
+
         cards.setLayout(new CardLayout());
         cards.add(checkoutPanel, checkoutItem.getItemName());
         cards.add(addBookCopyPanel, addBookCopyItem.getItemName());
         cards.add(addLibraryMemberPanel, addMemberItem.getItemName());
         cards.add(addBookPanel, addBookItem.getItemName());
+        cards.add(dueDateBookCopyPanel, checkBookCopyItem.getItemName());
     }
 
     public void addComponents() {

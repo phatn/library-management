@@ -287,6 +287,12 @@ public class AddLibraryMemberWindow extends JFrame {
                 COL_WIDTH_PROPORTIONS, DEFAULT_COLUMN_HEADERS);
         memberScroll.setPreferredSize(
                 new Dimension(TABLE_WIDTH, DEFAULT_TABLE_HEIGHT));
+
+        memberTable.setShowGrid(true);
+        memberTable.setGridColor(Color.GRAY);
+        memberTable.setShowGrid(true);
+        memberTable.setGridColor(Color.GRAY);
+
         memberScroll.getViewport().add(memberTable);
     }
 
