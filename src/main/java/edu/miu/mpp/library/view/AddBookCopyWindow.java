@@ -20,6 +20,7 @@ public class AddBookCopyWindow {
     private JTable bookTable;
     private JTable copyTable;
     private JButton addCopyButton;
+    private JSplitPane splitPane;
 
     private final String[] DEFAULT_BOOK_HEADERS = {"ISBN", "Title", "Number of Copies"};
     private final String[] DEFAULT_COPY_HEADERS = {"Copy Number", "Is Available"};
@@ -39,6 +40,8 @@ public class AddBookCopyWindow {
     public AddBookCopyWindow() {
         systemController = new SystemController();
         bookMap = systemController.getAllBooks();
+
+        splitPane.setResizeWeight(0.8);
 
         // Disable editing on tables
         bookTable.setDefaultEditor(Object.class, null);

@@ -136,7 +136,7 @@ public class LibAppWindow extends JFrame {
         cards.invalidate();
         cards.repaint();
         Util.adjustLabelFont(statusBar, Util.DARK_BLUE, true);
-        setSize(800, 450);
+        setSize(1000, 800);
         createLinkLabels();
         createMainPanels();
         CardLayout cl = (CardLayout) (cards.getLayout());
