@@ -69,8 +69,12 @@ public class DueDateBookCopyWindow {
                         ISBNs.add(tempt.getIsbn());
                     }
                     Map<String, Book> allBooks = systemController.getAllBooks();
-                    for (String key : allBooks.keySet()) {
-                        if (ISBNs.contains(key)) bookMap.put(key, allBooks.get(key));
+                    if(ISBNs.size() == 0){
+                        bookMap = new HashMap<>();
+                    } else {
+                        for (String key : allBooks.keySet()) {
+                            if (ISBNs.contains(key)) bookMap.put(key, allBooks.get(key));
+                        }
                     }
                     fillBookTableData(bookMap);
                 }

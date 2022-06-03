@@ -30,6 +30,6 @@ public class Strings {
     public static final String DELETE_MESS = "Do you want to delete memberId %s?";
 
     //Duedate book
-    public static final String CANNOT_FIND_MEMBER_ID = "Cannot find member &s";
+    public static final String CANNOT_FIND_MEMBER_ID = "Cannot find member %s";
 
 }
