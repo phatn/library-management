@@ -12,6 +12,7 @@ public class ServiceFactory {
         register(LoginService.class, new LoginService());
         register(BookService.class, new BookService());
         register(LibraryMemberService.class, new LibraryMemberService());
+        register(AuthorService.class, new AuthorService());
     }
     public static void register(Class<? extends Service> serviceClass, Service service) {
         SERVICE_MAP.put(serviceClass, service);

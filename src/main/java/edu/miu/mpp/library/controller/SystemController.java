@@ -2,11 +2,13 @@ package edu.miu.mpp.library.controller;
 
 import edu.miu.mpp.library.exception.BookCheckoutException;
 import edu.miu.mpp.library.exception.LoginException;
+import edu.miu.mpp.library.model.Author;
 import edu.miu.mpp.library.model.Role;
 import edu.miu.mpp.library.model.Book;
 import edu.miu.mpp.library.model.LibraryMember;
 import edu.miu.mpp.library.service.*;
 
+import java.util.List;
 import java.util.Map;
 
 public class SystemController implements FrontController {
@@ -16,6 +18,8 @@ public class SystemController implements FrontController {
     private LibraryMemberService libraryMemberService = (LibraryMemberService) ServiceFactory.getServiceInstance(LibraryMemberService.class);
 
     private BookService bookService = (BookService) ServiceFactory.getServiceInstance(BookService.class);
+
+    private AuthorService authorService = (AuthorService) ServiceFactory.getServiceInstance(AuthorService.class);
 
     @Override
     public Role login(String username, char[] password) throws LoginException {
@@ -50,5 +54,9 @@ public class SystemController implements FrontController {
     @Override
     public LibraryMember checkoutBook(String libraryMemberID, String isbn) throws BookCheckoutException {
         return bookService.checkout(libraryMemberID, isbn);
+    }
+
+    public List<Author> getAuthors() {
+        return authorService.findAllAuthors();
     }
 }

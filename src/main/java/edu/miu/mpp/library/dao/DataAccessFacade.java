@@ -1,5 +1,6 @@
 package edu.miu.mpp.library.dao;
 
+import edu.miu.mpp.library.model.Author;
 import edu.miu.mpp.library.model.Book;
 import edu.miu.mpp.library.model.LibraryMember;
 import edu.miu.mpp.library.model.User;
@@ -8,6 +9,7 @@ import java.io.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +18,7 @@ import java.util.Map;
 public class DataAccessFacade implements DataAccess {
 	
 	enum StorageType {
-		BOOKS, MEMBERS, USERS
+		BOOKS, MEMBERS, USERS, AUTHORS
 	}
 
 	public static final String OUTPUT_DIR = System.getProperty("user.dir")
@@ -64,6 +66,16 @@ public class DataAccessFacade implements DataAccess {
 		//   userId -> User
 		return (Map<String, User>)readFromStorage(StorageType.USERS);
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<Author> readAuthorList() {
+		// Returns a List of authors
+		return (List<Author>)readFromStorage(StorageType.AUTHORS);
+	}
+
+	public void saveAuthorList(List<Author> authorList) {
+		saveToStorage(StorageType.AUTHORS, authorList);
+	}
 	
 	
 	/////load methods - these place test data into the storage area
@@ -85,6 +97,11 @@ public class DataAccessFacade implements DataAccess {
 		Map<String, LibraryMember> members = new HashMap<>();
 		memberList.forEach(member -> members.put(member.getMemberId(), member));
 		saveToStorage(StorageType.MEMBERS, members);
+	}
+
+	static void loadAuthorList(List<Author> authorList) {
+		List<Author> authors = new ArrayList<>(authorList);
+		saveToStorage(StorageType.AUTHORS, authors);
 	}
 	
 	static void saveToStorage(StorageType type, Object ob) {

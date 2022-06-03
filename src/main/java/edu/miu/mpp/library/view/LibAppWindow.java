@@ -36,10 +36,12 @@ public class LibAppWindow extends JFrame {
     ListItem addMemberItem = new ListItem(Strings.ADD_MEMBER, false);
     ListItem addBookCopyItem = new ListItem(Strings.ADD_BOOK_COPY, false);
     ListItem checkBookCopyItem = new ListItem(Strings.CHECK_BOOK_COPY, true);
+    ListItem addBookItem = new ListItem(Strings.ADD_BOOK, false);
+
     ListItem logoutItem = new ListItem(Strings.LOG_OUT, true);
 
     ListItem[] sellerItems = {checkoutItem, addMemberItem};
-    ListItem[] memberItems = {checkoutItem, addBookCopyItem};
+    ListItem[] memberItems = {checkoutItem, addBookCopyItem, addBookItem};
 
     public ListItem[] getSellerItems() {
         return sellerItems;
@@ -79,6 +81,7 @@ public class LibAppWindow extends JFrame {
         model.addElement(addBookCopyItem);
         model.addElement(addMemberItem);
         model.addElement(checkBookCopyItem);
+        model.addElement(addBookItem);
         model.addElement(logoutItem);
 
         int begin = 0;
@@ -127,10 +130,15 @@ public class LibAppWindow extends JFrame {
         AddBookCopyWindow addBookCopyWindow = new AddBookCopyWindow();
         JPanel addBookCopyPanel = addBookCopyWindow.getMainPanel();
 
+        // Add Book Window
+        AddBookWindow addBookWindow = new AddBookWindow();
+        JPanel addBookPanel = addBookWindow.getMainPanel();
+
         cards.setLayout(new CardLayout());
         cards.add(checkoutPanel, checkoutItem.getItemName());
         cards.add(addBookCopyPanel, addBookCopyItem.getItemName());
         cards.add(addLibraryMemberPanel, addMemberItem.getItemName());
+        cards.add(addBookPanel, addBookItem.getItemName());
     }
 
     public void addComponents() {
@@ -207,10 +215,12 @@ public class LibAppWindow extends JFrame {
     private void setMenuWithRole() {
         addMemberItem.setHighlight(this.role != Role.LIBRARIAN);
         addBookCopyItem.setHighlight(this.role != Role.LIBRARIAN);
+        addBookItem.setHighlight(this.role != Role.LIBRARIAN);
     }
 
     private boolean isAccessAllMenu(String value) {
-        if (role == Role.LIBRARIAN && (value == Strings.ADD_BOOK_COPY || value == Strings.ADD_MEMBER)) {
+        if (role == Role.LIBRARIAN &&
+                (value.equals(Strings.ADD_BOOK) || value.equals(Strings.ADD_BOOK_COPY) || value.equals(Strings.ADD_MEMBER))) {
             return false;
         }
         return true;
