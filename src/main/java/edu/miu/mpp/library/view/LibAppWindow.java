@@ -1,10 +1,9 @@
 package edu.miu.mpp.library.view;
 
+import edu.miu.mpp.library.controller.SystemController;
 import edu.miu.mpp.library.exception.LoginException;
 import edu.miu.mpp.library.model.ListItem;
 import edu.miu.mpp.library.model.Role;
-import edu.miu.mpp.library.service.LoginService;
-import edu.miu.mpp.library.service.ServiceFactory;
 import edu.miu.mpp.library.util.Strings;
 import edu.miu.mpp.library.util.Util;
 
@@ -59,12 +58,13 @@ public class LibAppWindow extends JFrame {
 
     public static JTextArea statusBar = new JTextArea(Strings.WELCOME);
 
-    private LoginService loginService = (LoginService) ServiceFactory.getServiceInstance(LoginService.class);
+    private SystemController systemController;
 
     private JSplitPane innerPane;
     private JSplitPane outerPane;
 
     public LibAppWindow() {
+        systemController = new SystemController();
         cards = new JPanel();
         cards.setLayout(new BorderLayout());
         LoginWindow loginWindow = new LoginWindow(this);
@@ -196,7 +196,7 @@ public class LibAppWindow extends JFrame {
             JOptionPane.showMessageDialog(this, Strings.ERROR_PASSWORD_BLANK);
         } else {
             try {
-                this.role = loginService.login(username, password);
+                this.role = systemController.login(username, password);
                 statusBar.setText(String.format(Strings.WELCOME, username));
                 addComponents();
                 setMenuWithRole();
