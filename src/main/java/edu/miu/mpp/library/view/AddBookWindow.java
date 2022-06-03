@@ -28,7 +28,7 @@ public class AddBookWindow implements MessageableWindow {
     private JTable bookTable;
     private JComboBox maxCheckoutComboBox;
 
-    private final String[] DEFAULT_BOOK_HEADERS = {"ISBN", "Title", "Authors", "Number of Copies"};
+    private final String[] DEFAULT_BOOK_HEADERS = {"ISBN", "Title", "Authors", "Max Checkout", "Number of Copies"};
     private Map<String, Book> bookMap;
     private List<Author> authorDataList;
     private final SystemController systemController;
@@ -82,7 +82,7 @@ public class AddBookWindow implements MessageableWindow {
                     sb.append("; ");
                 }
             }
-            Object[] row = {book.getIsbn(), book.getTitle(), sb.toString(), book.getCopies().length};
+            Object[] row = {book.getIsbn(), book.getTitle(), sb.toString(), book.getMaxCheckoutLength(), book.getCopies().length};
             System.out.println(Arrays.toString(row));
             model.addRow(row);
         }
@@ -110,6 +110,7 @@ public class AddBookWindow implements MessageableWindow {
         TableColumnModel bookColumnModel = bookTable.getColumnModel();
         bookColumnModel.getColumn(0).setCellRenderer(centerRenderer);
         bookColumnModel.getColumn(3).setCellRenderer(centerRenderer);
+        bookColumnModel.getColumn(4).setCellRenderer(centerRenderer);
     }
 
     private void addBook() {
