@@ -190,11 +190,7 @@ public class LibAppWindow extends JFrame {
     }
 
     public void authenUser(String username, char[] password) {
-        if (username.length() == 0) {
-            JOptionPane.showMessageDialog(this, Strings.ERROR_USERNAME_BLANK);
-        } else if (password.length == 0) {
-            JOptionPane.showMessageDialog(this, Strings.ERROR_PASSWORD_BLANK);
-        } else {
+        if (username.length() > 0 && password.length > 0) {
             try {
                 this.role = systemController.login(username, password);
                 statusBar.setText(String.format(Strings.WELCOME, username));
