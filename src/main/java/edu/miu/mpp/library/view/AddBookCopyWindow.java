@@ -11,6 +11,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -65,6 +67,14 @@ public class AddBookCopyWindow {
         alignColumn();
 
         registerEventListener();
+        mainPanel.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                super.componentShown(e);
+                bookMap = systemController.getAllBooks();
+                fillBookTableData(bookMap);
+            }
+        });
     }
 
     private void registerEventListener() {
