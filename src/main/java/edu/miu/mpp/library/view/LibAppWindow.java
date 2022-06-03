@@ -35,7 +35,7 @@ public class LibAppWindow extends JFrame {
     ListItem checkoutItem = new ListItem(Strings.CHECK_OUT, true);
     ListItem addMemberItem = new ListItem(Strings.ADD_MEMBER, false);
     ListItem addBookCopyItem = new ListItem(Strings.ADD_BOOK_COPY, false);
-
+    ListItem checkBookCopyItem = new ListItem(Strings.ADD_BOOK_COPY, true);
     ListItem logoutItem = new ListItem(Strings.LOG_OUT, true);
 
     ListItem[] sellerItems = {checkoutItem, addMemberItem};
@@ -78,7 +78,9 @@ public class LibAppWindow extends JFrame {
         model.addElement(checkoutItem);
         model.addElement(addBookCopyItem);
         model.addElement(addMemberItem);
+        model.addElement(checkBookCopyItem);
         model.addElement(logoutItem);
+
         int begin = 0;
         int end = 0;
         linkList = new JList<>(model);
