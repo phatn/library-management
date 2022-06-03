@@ -35,7 +35,7 @@ public class LibAppWindow extends JFrame {
     ListItem checkoutItem = new ListItem(Strings.CHECK_OUT, true);
     ListItem addMemberItem = new ListItem(Strings.ADD_MEMBER, false);
     ListItem addBookCopyItem = new ListItem(Strings.ADD_BOOK_COPY, false);
-    ListItem checkBookCopyItem = new ListItem(Strings.ADD_BOOK_COPY, true);
+    ListItem checkBookCopyItem = new ListItem(Strings.CHECK_BOOK_COPY, true);
     ListItem logoutItem = new ListItem(Strings.LOG_OUT, true);
 
     ListItem[] sellerItems = {checkoutItem, addMemberItem};
