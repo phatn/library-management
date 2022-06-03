@@ -14,6 +14,8 @@ import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.List;
@@ -78,6 +80,13 @@ public class DueDateBookCopyWindow {
                     }
                     fillBookTableData(bookMap);
                 }
+            }
+        });
+        mainPanel.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                super.componentShown(e);
+                bookMap = new HashMap<>();
             }
         });
     }
