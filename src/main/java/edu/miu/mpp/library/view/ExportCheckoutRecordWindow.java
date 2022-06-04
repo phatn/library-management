@@ -38,18 +38,7 @@ public class ExportCheckoutRecordWindow implements MessageableWindow {
     private ComboBoxModel model;
 
     public ExportCheckoutRecordWindow() {
-
-        Map<String, LibraryMember> libraryMemberMap = frontController.getAllLibraryMembers();
-        List<String> data = new ArrayList<>();
-        data.add("--Select--");
-        data.addAll(libraryMemberMap.values().stream()
-                .map(l -> new MemberCboData(l.getMemberId(), l.getFirstName(), l.getLastName()).toString())
-                .toList());
-
-        model = new DefaultComboBoxModel(data.toArray(new String[data.size()]));
-        cboMemberID.setModel(model);
-        cboMemberID.updateUI();
-
+        populateCboData();
         tableModel = new DefaultTableModel(null, DEFAULT_COLUMN_HEADERS);
         tblRecordEntry.setModel(tableModel);
         tblRecordEntry.setShowGrid(true);
@@ -74,6 +63,26 @@ public class ExportCheckoutRecordWindow implements MessageableWindow {
             printConsole(tableModel.getDataVector());
             exportPDF(tblRecordEntry);
         });
+        mainPanel.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                super.componentShown(e);
+                populateCboData();
+            }
+        });
+    }
+
+    void populateCboData() {
+        Map<String, LibraryMember> libraryMemberMap = frontController.getAllLibraryMembers();
+        List<String> data = new ArrayList<>();
+        data.add("--Select--");
+        data.addAll(libraryMemberMap.values().stream()
+                .map(l -> new MemberCboData(l.getMemberId(), l.getFirstName(), l.getLastName()).toString())
+                .toList());
+
+        model = new DefaultComboBoxModel(data.toArray(new String[data.size()]));
+        cboMemberID.setModel(model);
+        cboMemberID.updateUI();
     }
 
     public JPanel getMainPanel() {
