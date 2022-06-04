@@ -67,7 +67,9 @@
         <children>
           <component id="31be1" class="javax.swing.JTable" binding="tblRecordEntry">
             <constraints/>
-            <properties/>
+            <properties>
+              <gridColor color="-11397351"/>
+            </properties>
           </component>
         </children>
       </scrollpane>

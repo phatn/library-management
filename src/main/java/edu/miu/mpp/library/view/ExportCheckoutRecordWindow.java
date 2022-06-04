@@ -121,7 +121,6 @@ public class ExportCheckoutRecordWindow implements MessageableWindow {
     private void exportPDF(JTable table) {
         LocalDateTime localDateTime = LocalDateTime.now();
         String outputDir = System.getProperty("user.dir");
-        System.out.println("outputdir: " + outputDir);
         ZonedDateTime zdt = ZonedDateTime.of(localDateTime, ZoneId.systemDefault());
         long date = zdt.toInstant().toEpochMilli();
         String fileName =  outputDir + File.separator + "checkout_record_" + date + ".pdf";
