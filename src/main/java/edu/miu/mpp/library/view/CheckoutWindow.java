@@ -45,6 +45,7 @@ public class CheckoutWindow implements MessageableWindow {
             try {
                 LibraryMember libraryMember = frontController.checkoutBook(txtMemberID.getText().trim(), txtISBN.getText().trim());
                 displayInfo("Checking out '" + txtISBN.getText().trim() + "' was success");
+                clearTable(model);
                 List<String[]> rows = Util.parseCheckoutRecordEntryRows(libraryMember);
                 rows.forEach(model::addRow);
                 tblRecordEntry.updateUI();
@@ -68,6 +69,11 @@ public class CheckoutWindow implements MessageableWindow {
     @Override
     public void updateData() {
 
+    }
+    private void clearTable(DefaultTableModel tableModel) {
+        for (int i = tableModel.getRowCount() - 1; i >= 0; i--) {
+            tableModel.removeRow(i);
+        }
     }
 
     class ValueChangedListener implements DocumentListener {
