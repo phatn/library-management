@@ -51,4 +51,5 @@ public class CheckoutRecordEntry implements Serializable {
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
+
 }

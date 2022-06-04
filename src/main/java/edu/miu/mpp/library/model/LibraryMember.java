@@ -28,8 +28,8 @@ final public class LibraryMember extends Person implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Member Info: " + "ID: " + memberId + ", name: " + getFirstName() + " " + getLastName() + 
-				", " + getTelephone() + " " + getAddress();
+		return "LibraryMember{" + "ID=" + memberId + ",name=" + getFirstName() + " " + getLastName() +
+				",telephone=" + getTelephone() + ",address=" + getAddress() + "}";
 	}
 
 	private static final long serialVersionUID = -2226197306790714013L;
