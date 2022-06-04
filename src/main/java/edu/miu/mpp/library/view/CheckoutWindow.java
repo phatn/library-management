@@ -5,6 +5,7 @@ import edu.miu.mpp.library.controller.SystemController;
 import edu.miu.mpp.library.exception.BookCheckoutException;
 import edu.miu.mpp.library.model.CheckoutRecordEntry;
 import edu.miu.mpp.library.model.LibraryMember;
+import edu.miu.mpp.library.util.Util;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -33,11 +34,8 @@ public class CheckoutWindow implements MessageableWindow {
     private JScrollPane scrollPane;
 
     private final DefaultTableModel model;
-    private final String[] DEFAULT_COLUMN_HEADERS
-            = {"Member ID", "ISBN", "Book Copy ID", "Checkout Date", "Due Date"};
-
     public CheckoutWindow() {
-        model = new DefaultTableModel(null, DEFAULT_COLUMN_HEADERS);
+        model = new DefaultTableModel(null, Util.DEFAULT_COLUMN_HEADERS);
         tblRecordEntry.setModel(model);
         tblRecordEntry.setShowGrid(true);
         txtMemberID.getDocument().addDocumentListener(new ValueChangedListener());
@@ -47,7 +45,7 @@ public class CheckoutWindow implements MessageableWindow {
             try {
                 LibraryMember libraryMember = frontController.checkoutBook(txtMemberID.getText().trim(), txtISBN.getText().trim());
                 displayInfo("Checking out '" + txtISBN.getText().trim() + "' was success");
-                List<String[]> rows = parseRows(libraryMember);
+                List<String[]> rows = Util.parseCheckoutRecordEntryRows(libraryMember);
                 rows.forEach(model::addRow);
                 tblRecordEntry.updateUI();
             } catch (BookCheckoutException ex) {
@@ -62,22 +60,6 @@ public class CheckoutWindow implements MessageableWindow {
             btnCheckout.setEnabled(true);
         }
     }
-    private List<String[]> parseRows(LibraryMember libraryMember) {
-        List<CheckoutRecordEntry> checkoutRecordEntries = libraryMember.getCheckoutRecord().getCheckoutRecordEntries();
-        List<String[]> rows = new ArrayList<>();
-        checkoutRecordEntries.forEach(checkoutRecordEntry -> {
-            String[] row = new String[DEFAULT_COLUMN_HEADERS.length];
-            row[0] = libraryMember.getMemberId();
-            row[1] = checkoutRecordEntry.getIsbn();
-            row[2] = checkoutRecordEntry.getBookCopyId();
-            row[3] = checkoutRecordEntry.getCheckoutDate().toString();
-            row[4] = checkoutRecordEntry.getDueDate().toString();
-            rows.add(row);
-        });
-
-        return rows;
-    }
-
 
     public JPanel getMainPanel() {
         return mainPanel;

@@ -1,9 +1,12 @@
 package edu.miu.mpp.library.util;
 
+import edu.miu.mpp.library.model.CheckoutRecordEntry;
+import edu.miu.mpp.library.model.LibraryMember;
 import edu.miu.mpp.library.model.User;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -12,6 +15,9 @@ import javax.swing.JComponent;
 
 
 public class Util {
+
+    public static final String[] DEFAULT_COLUMN_HEADERS
+            = {"Member ID", "ISBN", "Book Copy ID", "Checkout Date", "Due Date"};
     public static final Color DARK_BLUE = Color.BLUE.darker();
     public static final Color ERROR_MESSAGE_COLOR = Color.RED.darker(); //dark red
     public static final Color INFO_MESSAGE_COLOR = new Color(24, 98, 19); //dark green
@@ -70,5 +76,21 @@ public class Util {
             if(u.equals(user)) return u;
         }
         return null;
+    }
+
+    public static List<String[]> parseCheckoutRecordEntryRows(LibraryMember libraryMember) {
+        List<CheckoutRecordEntry> checkoutRecordEntries = libraryMember.getCheckoutRecord().getCheckoutRecordEntries();
+        List<String[]> rows = new ArrayList<>();
+        checkoutRecordEntries.forEach(checkoutRecordEntry -> {
+            String[] row = new String[DEFAULT_COLUMN_HEADERS.length];
+            row[0] = libraryMember.getMemberId();
+            row[1] = checkoutRecordEntry.getIsbn();
+            row[2] = checkoutRecordEntry.getBookCopyId();
+            row[3] = checkoutRecordEntry.getCheckoutDate().toString();
+            row[4] = checkoutRecordEntry.getDueDate().toString();
+            rows.add(row);
+        });
+
+        return rows;
     }
 }

@@ -38,6 +38,7 @@ public class LibAppWindow extends JFrame {
     ListItem checkBookCopyItem = new ListItem(Strings.CHECK_BOOK_COPY, true);
     ListItem addBookItem = new ListItem(Strings.ADD_BOOK, false);
 
+    ListItem exportCheckoutRecordItem = new ListItem(Strings.EXPORT_CHECKOUT_RECORD, false);
     ListItem logoutItem = new ListItem(Strings.LOG_OUT, true);
 
     ListItem[] sellerItems = {checkoutItem, addMemberItem};
@@ -80,6 +81,7 @@ public class LibAppWindow extends JFrame {
         if (role == Role.LIBRARIAN) {
             model.addElement(checkoutItem);
             model.addElement(checkBookCopyItem);
+            model.addElement(exportCheckoutRecordItem);
         } else if (role == Role.ADMIN) {
             model.addElement(addMemberItem);
             model.addElement(addBookItem);
@@ -90,6 +92,7 @@ public class LibAppWindow extends JFrame {
             model.addElement(addMemberItem);
             model.addElement(addBookItem);
             model.addElement(addBookCopyItem);
+            model.addElement(exportCheckoutRecordItem);
         }
         model.addElement(logoutItem);
         linkList = new JList<>(model);
@@ -141,12 +144,17 @@ public class LibAppWindow extends JFrame {
         DueDateBookCopyWindow dueDateBookCopyWindow = new DueDateBookCopyWindow();
         JPanel dueDateBookCopyPanel = dueDateBookCopyWindow.getMainPanel();
 
+        // Export Checkout Record Entry
+        ExportCheckoutRecordWindow exportCheckoutRecordWindow = new ExportCheckoutRecordWindow();
+        JPanel exportCheckoutRecordPanel = exportCheckoutRecordWindow.getMainPanel();
+
         cards.setLayout(new CardLayout());
         cards.add(checkoutPanel, checkoutItem.getItemName());
         cards.add(addBookCopyPanel, addBookCopyItem.getItemName());
         cards.add(addLibraryMemberPanel, addMemberItem.getItemName());
         cards.add(addBookPanel, addBookItem.getItemName());
         cards.add(dueDateBookCopyPanel, checkBookCopyItem.getItemName());
+        cards.add(exportCheckoutRecordPanel, exportCheckoutRecordItem.getItemName());
     }
 
     public void addComponents() {

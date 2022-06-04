@@ -26,7 +26,7 @@ public class BookService extends AbstractService {
         Book book = Optional.ofNullable(bookMap.get(isbn))
                 .orElseThrow(() -> new BookCheckoutException("No books found with isbn " + isbn));
         BookCopy availableBookCopy = Arrays.stream(book.getCopies())
-                .filter(bookCopy -> bookCopy.isAvailable())
+                .filter(BookCopy::isAvailable)
                 .findFirst()
                 .orElseThrow(() -> new BookCheckoutException("No book copies available of " + isbn));
 
