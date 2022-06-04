@@ -63,6 +63,7 @@ public class AddBookWindow implements MessageableWindow {
             @Override
             public void componentShown(ComponentEvent e) {
                 super.componentShown(e);
+                setWelcomeUser();
                 getBooks();
                 getAuthors();
             }
@@ -173,10 +174,5 @@ public class AddBookWindow implements MessageableWindow {
     @Override
     public void displayError(String msg) {
         MessageableWindow.super.displayError(msg);
-    }
-
-    @Override
-    public void updateData() {
-
     }
 }

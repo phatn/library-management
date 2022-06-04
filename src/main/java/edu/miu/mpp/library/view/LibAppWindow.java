@@ -61,7 +61,7 @@ public class LibAppWindow extends JFrame {
     }
 
     public static JTextArea statusBar = new JTextArea(Strings.WELCOME);
-
+    public static String currentUser = "";
     private final FrontController systemController = new SystemController();
 
     private JSplitPane innerPane;
@@ -217,7 +217,8 @@ public class LibAppWindow extends JFrame {
         if (username.length() > 0 && password.length > 0) {
             try {
                 this.role = systemController.login(username, password);
-                statusBar.setText(String.format(Strings.WELCOME, username));
+                currentUser = username;
+                statusBar.setText(String.format(Strings.WELCOME, currentUser));
                 removeComponents();
                 addComponents();
             } catch (LoginException e) {

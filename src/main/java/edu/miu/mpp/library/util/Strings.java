@@ -13,7 +13,7 @@ public class Strings {
     public static final String LOG_OUT_TITLE = "LOG OUT";
     public static final String ERROR_PASSWORD_WRONG = "Password incorrect!";
     public static final String ERROR_USERNAME_WRONG = "Username %s not exist!";
-    public static final String CHECK_BOOK_COPY = "Check book copy";
+    public static final String CHECK_BOOK_COPY = "Check due date";
     //add library member
     public static final String SUCCESS_ADD_MEMBER = "Member %s is added success!";
     public static final String SUCCESS_DELETE_MEMBER = "Member %s is deleted success!";

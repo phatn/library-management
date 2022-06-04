@@ -13,17 +13,15 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static edu.miu.mpp.library.view.LibAppWindow.statusBar;
 
-public class AddLibraryMemberWindow extends JFrame {
+public class AddLibraryMemberWindow extends JFrame implements MessageableWindow {
     private static final long serialVersionUID = 1L;
 
     private JPanel AddLibraryMemberWindow;
@@ -110,6 +108,14 @@ public class AddLibraryMemberWindow extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 getRowData();
+            }
+        });
+
+        getMainPanel().addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                super.componentShown(e);
+                setWelcomeUser();
             }
         });
     }

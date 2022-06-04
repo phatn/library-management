@@ -11,6 +11,8 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +55,14 @@ public class CheckoutWindow implements MessageableWindow {
                 displayError(ex.getMessage());
             }
         });
+
+        getMainPanel().addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                super.componentShown(e);
+                setWelcomeUser();
+            }
+        });
     }
 
     private void updateCheckoutButton() {
@@ -66,10 +76,6 @@ public class CheckoutWindow implements MessageableWindow {
         return mainPanel;
     }
 
-    @Override
-    public void updateData() {
-
-    }
     private void clearTable(DefaultTableModel tableModel) {
         for (int i = tableModel.getRowCount() - 1; i >= 0; i--) {
             tableModel.removeRow(i);

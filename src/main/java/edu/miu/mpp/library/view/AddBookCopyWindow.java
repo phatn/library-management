@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddBookCopyWindow {
+public class AddBookCopyWindow implements MessageableWindow {
     private JPanel mainPanel;
     private JTextField isbnTxt;
     private JTable bookTable;
@@ -71,6 +71,7 @@ public class AddBookCopyWindow {
             @Override
             public void componentShown(ComponentEvent e) {
                 super.componentShown(e);
+                setWelcomeUser();
                 bookMap = systemController.getAllBooks();
                 fillBookTableData(bookMap);
             }

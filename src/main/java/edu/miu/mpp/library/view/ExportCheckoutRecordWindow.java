@@ -67,6 +67,7 @@ public class ExportCheckoutRecordWindow implements MessageableWindow {
             @Override
             public void componentShown(ComponentEvent e) {
                 super.componentShown(e);
+                setWelcomeUser();
                 populateCboData();
             }
         });
@@ -87,11 +88,6 @@ public class ExportCheckoutRecordWindow implements MessageableWindow {
 
     public JPanel getMainPanel() {
         return mainPanel;
-    }
-
-    @Override
-    public void updateData() {
-
     }
 
     class MemberCboData {

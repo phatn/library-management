@@ -1,6 +1,9 @@
 package edu.miu.mpp.library.view;
 
+import edu.miu.mpp.library.util.Strings;
 import edu.miu.mpp.library.util.Util;
+
+import static edu.miu.mpp.library.view.LibAppWindow.currentUser;
 import static edu.miu.mpp.library.view.LibAppWindow.statusBar;
 public interface MessageableWindow {
 
@@ -14,5 +17,8 @@ public interface MessageableWindow {
         statusBar.setText(msg);
     }
 
-    public void updateData();
+    public default void setWelcomeUser() {
+        statusBar.setText(String.format(Strings.WELCOME, currentUser));
+        statusBar.setForeground(Util.DARK_BLUE);
+    }
 }

@@ -22,7 +22,7 @@ import java.util.List;
 
 import static edu.miu.mpp.library.view.LibAppWindow.statusBar;
 
-public class DueDateBookCopyWindow {
+public class DueDateBookCopyWindow implements MessageableWindow {
     private JPanel mainPanel;
     private JTextField isbnTxt;
     private JTable bookTable;
@@ -86,6 +86,7 @@ public class DueDateBookCopyWindow {
             @Override
             public void componentShown(ComponentEvent e) {
                 super.componentShown(e);
+                setWelcomeUser();
                 bookMap = new HashMap<>();
             }
         });
