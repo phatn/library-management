@@ -35,7 +35,7 @@ public class LibAppWindow extends JFrame {
     ListItem checkoutItem = new ListItem(Strings.CHECK_OUT, true);
     ListItem addMemberItem = new ListItem(Strings.ADD_MEMBER, false);
     ListItem addBookCopyItem = new ListItem(Strings.ADD_BOOK_COPY, false);
-    ListItem checkBookCopyItem = new ListItem(Strings.CHECK_BOOK_COPY, true);
+    ListItem checkDueDate = new ListItem(Strings.CHECK_DUE_DATE, true);
     ListItem addBookItem = new ListItem(Strings.ADD_BOOK, false);
 
     ListItem exportCheckoutRecordItem = new ListItem(Strings.EXPORT_CHECKOUT_RECORD, false);
@@ -80,7 +80,7 @@ public class LibAppWindow extends JFrame {
         DefaultListModel<ListItem> model = new DefaultListModel<>();
         if (role == Role.LIBRARIAN) {
             model.addElement(checkoutItem);
-            model.addElement(checkBookCopyItem);
+            model.addElement(checkDueDate);
             model.addElement(exportCheckoutRecordItem);
         } else if (role == Role.ADMIN) {
             model.addElement(addMemberItem);
@@ -88,7 +88,7 @@ public class LibAppWindow extends JFrame {
             model.addElement(addBookCopyItem);
         } else {
             model.addElement(checkoutItem);
-            model.addElement(checkBookCopyItem);
+            model.addElement(checkDueDate);
             model.addElement(addMemberItem);
             model.addElement(addBookItem);
             model.addElement(addBookCopyItem);
@@ -153,7 +153,7 @@ public class LibAppWindow extends JFrame {
         cards.add(addBookCopyPanel, addBookCopyItem.getItemName());
         cards.add(addLibraryMemberPanel, addMemberItem.getItemName());
         cards.add(addBookPanel, addBookItem.getItemName());
-        cards.add(dueDateBookCopyPanel, checkBookCopyItem.getItemName());
+        cards.add(dueDateBookCopyPanel, checkDueDate.getItemName());
         cards.add(exportCheckoutRecordPanel, exportCheckoutRecordItem.getItemName());
     }
 
