@@ -151,7 +151,9 @@ public class LibAppWindow extends JFrame {
 
     public void addComponents() {
         Util.adjustLabelFont(statusBar, Util.DARK_BLUE, true);
-        setSize(1000, 800);
+        setSize(1200, 600);
+        setLocationRelativeTo(null);
+        setVisible(true);
         createLinkLabels();
         createMainPanels();
         CardLayout cl = (CardLayout) (cards.getLayout());
@@ -169,13 +171,13 @@ public class LibAppWindow extends JFrame {
             innerPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, linkList, cards);
             innerPane.setDividerLocation(180);
             outerPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, innerPane, statusBar);
-            outerPane.setResizeWeight(1);
-            outerPane.setDividerLocation(100);
+            outerPane.setDividerLocation(500);
             this.add(outerPane, BorderLayout.CENTER);
         } else {
             innerPane.setLeftComponent(linkList);
             innerPane.setDividerLocation(180);
             outerPane.setRightComponent(statusBar);
+            outerPane.setDividerLocation(500);
         }
     }
 
@@ -186,6 +188,8 @@ public class LibAppWindow extends JFrame {
             innerPane.setLeftComponent(null);
             outerPane.setRightComponent(null);
             setSize(400, 200);
+            setLocationRelativeTo(null);
+            setVisible(true);
             LoginWindow loginWindow = new LoginWindow(this);
             cards.add(loginWindow.getMainPane(), BorderLayout.CENTER);
         }

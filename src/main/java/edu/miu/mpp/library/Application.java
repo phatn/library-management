@@ -21,6 +21,6 @@ public class Application {
         int width = toolkit.getScreenSize().width;
         int frameHeight = frame.getSize().height;
         int frameWidth = frame.getSize().width;
-        frame.setLocation(((width - frameWidth) / 2), (height - frameHeight) / 3);
+        frame.setLocation(((width - frameWidth) / 2), (height - frameHeight) / 2);
     }
 }
