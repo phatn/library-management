@@ -46,16 +46,18 @@ public class ExportCheckoutRecordWindow implements MessageableWindow {
             if(e.getStateChange() == ItemEvent.SELECTED) {
                 String selectedItem = e.getItem().toString();
                 clearTable(tableModel);
+                List<String[]> rows = new ArrayList<>();
                 if(!selectedItem.contains("Select")) {
                     String memberID = selectedItem.substring(0, selectedItem.indexOf("-"));
                     LibraryMember libraryMember = frontController.getAllLibraryMembers().get(memberID);
                     if(libraryMember != null) {
-                        List<String[]> rows = Util.parseCheckoutRecordEntryRows(libraryMember);
+                        rows = Util.parseCheckoutRecordEntryRows(libraryMember);
                         rows.forEach(tableModel::addRow);
-                        btnPrint.setEnabled(rows.isEmpty() ? false : true);
                         tblRecordEntry.updateUI();
                     }
                 }
+                btnPrint.setEnabled(rows.isEmpty() ? false : true);
+
             }
         });
 
