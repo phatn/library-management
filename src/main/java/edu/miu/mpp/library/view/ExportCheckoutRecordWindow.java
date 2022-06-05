@@ -1,9 +1,5 @@
 package edu.miu.mpp.library.view;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfWriter;
 import edu.miu.mpp.library.controller.FrontController;
 import edu.miu.mpp.library.controller.SystemController;
 import edu.miu.mpp.library.model.LibraryMember;
@@ -11,13 +7,7 @@ import edu.miu.mpp.library.util.Util;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.List;
 
@@ -63,7 +53,6 @@ public class ExportCheckoutRecordWindow implements MessageableWindow {
 
         btnPrint.addActionListener(e -> {
             printConsole(tableModel.getDataVector());
-            exportPDF(tblRecordEntry);
         });
         mainPanel.addComponentListener(new ComponentAdapter() {
             @Override
@@ -117,40 +106,21 @@ public class ExportCheckoutRecordWindow implements MessageableWindow {
     }
 
     private void printConsole(Vector<Vector> allRows) {
+        System.out.println("---------------------------------------------------------------------------------------");
+        System.out.printf("%10s %15s %15s %20s %20s", "MEMBER ID", "ISBN", "BOOK COPY ID", "CHECKOUT DATE", "DUE DATE");
+        System.out.println();
+        System.out.println("---------------------------------------------------------------------------------------");
+
         for(int i = 0; i < allRows.size(); i++) {
-            for(int j = 0; j < allRows.get(i).size(); j++) {
-                System.out.print(allRows.get(i).get(j) + " ");
-            }
+            int colSize = allRows.get(i).size();
+            System.out.format("%10s %15s %15s %20s %20s",
+                    colSize > 0 ? allRows.get(i).get(0) : "",
+                    colSize > 1 ? allRows.get(i).get(1) : "",
+                    colSize > 2 ? allRows.get(i).get(2) : "",
+                    colSize > 3 ? allRows.get(i).get(3) : "",
+                    colSize > 4 ? allRows.get(i).get(4) : "");
             System.out.println();
         }
-    }
-
-    private void exportPDF(JTable table) {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        String outputDir = System.getProperty("user.dir");
-        ZonedDateTime zdt = ZonedDateTime.of(localDateTime, ZoneId.systemDefault());
-        long date = zdt.toInstant().toEpochMilli();
-        String fileName =  outputDir + File.separator + "checkout_record_" + date + ".pdf";
-        Document document = new Document(PageSize.A4.rotate());
-        try {
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(fileName));
-            document.open();
-            PdfContentByte cb = writer.getDirectContent();
-            cb.saveState();
-            Graphics2D g2 = cb.createGraphicsShapes(500, 500);
-            Shape oldClip = g2.getClip();
-            g2.clipRect(0, 0, 500, 500);
-
-            table.print(g2);
-            g2.setClip(oldClip);
-
-            g2.dispose();
-            cb.restoreState();
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            displayError("Error to export checkout record file!");
-        }
-        document.close();
-        displayInfo("Checkout record file is at " + fileName);
+        System.out.println("---------------------------------------------------------------------------------------");
     }
 }
