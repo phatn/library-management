@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.swing.JComponent;
 
@@ -92,5 +93,11 @@ public class Util {
         });
 
         return rows;
+    }
+
+    public static boolean isValidIsbn(String isbn) {
+        String regex = "^(?:ISBN(?:-10)?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$)[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$";
+        Pattern pattern = Pattern.compile(regex);
+        return pattern.matcher(isbn).matches();
     }
 }

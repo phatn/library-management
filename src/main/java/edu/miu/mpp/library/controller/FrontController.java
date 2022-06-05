@@ -30,4 +30,6 @@ public interface FrontController {
     LibraryMember checkoutBook(String libraryMemberID, String isbn) throws BookCheckoutException;
 
     List<Author> getAuthors();
+
+    void addBook(String isbn, String title, int maxCheckoutLength, List<Author> authors);
 }

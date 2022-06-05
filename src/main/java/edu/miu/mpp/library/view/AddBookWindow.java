@@ -1,6 +1,7 @@
 package edu.miu.mpp.library.view;
 
 import edu.miu.mpp.library.controller.SystemController;
+import edu.miu.mpp.library.exception.BookAddException;
 import edu.miu.mpp.library.model.Author;
 import edu.miu.mpp.library.model.Book;
 
@@ -17,6 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+
+import static edu.miu.mpp.library.util.Util.isValidIsbn;
 
 public class AddBookWindow implements MessageableWindow {
     private JPanel mainPanel;
@@ -115,44 +118,54 @@ public class AddBookWindow implements MessageableWindow {
     }
 
     private void addBook() {
+        if (!validateInputs()) {
+            return;
+        }
+
         String isbn = isbnTxt.getText();
-
-        if (!isValidIsbn(isbn)) {
-            displayError("Invalid ISBN number. Valid ISBN number must have 10 or 13 number digits.");
-            return;
-        }
-        if (isBookExisted(isbn)) {
-            displayError("A book with the ISBN existed.");
-            return;
-        }
-
         String title = titleTxt.getText();
-        if (title == null || title.isEmpty()) {
-            displayError("No title specified.");
-            return;
-        }
-
-
         int maxCheckoutLength = (int)maxCheckoutComboBox.getSelectedItem();
-
         List<Author> authors = authorList.getSelectedValuesList();
 
-        if (authors.size() < 1) {
-            displayError("No author selected.");
+        try {
+            systemController.addBook(isbn, title, maxCheckoutLength, authors);
+        } catch (BookAddException ex) {
+            String msg = ex.getMessage();
+            displayError(msg);
             return;
         }
-        Book book = new Book(isbn, title, maxCheckoutLength, authors);
-        bookMap.put(isbn, book);
-        systemController.saveBooks(bookMap);
+
         displayInfo("Book added.");
         getBooks();
         clearInputs();
     }
 
-    private boolean isValidIsbn(String isbn) {
-        String regex = "^(?:ISBN(?:-10)?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$)[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$";
-        Pattern pattern = Pattern.compile(regex);
-        return pattern.matcher(isbn).matches();
+    private boolean validateInputs() {
+        String isbn = isbnTxt.getText();
+
+        if (!isValidIsbn(isbn)) {
+            displayError("Invalid ISBN number. Valid ISBN number must have 10 or 13 number digits.");
+            return false;
+        }
+        if (isBookExisted(isbn)) {
+            displayError("A book with the ISBN existed.");
+            return false;
+        }
+
+        String title = titleTxt.getText();
+        if (title == null || title.isEmpty()) {
+            displayError("No title specified.");
+            return false;
+        }
+
+
+        List<Author> authors = authorList.getSelectedValuesList();
+        if (authors.size() < 1) {
+            displayError("No author selected.");
+            return false;
+        }
+
+        return true;
     }
 
     private boolean isBookExisted(String isbn) {

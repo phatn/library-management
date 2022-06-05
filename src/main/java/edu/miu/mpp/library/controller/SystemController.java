@@ -1,5 +1,6 @@
 package edu.miu.mpp.library.controller;
 
+import edu.miu.mpp.library.exception.BookAddException;
 import edu.miu.mpp.library.exception.BookCheckoutException;
 import edu.miu.mpp.library.exception.LoginException;
 import edu.miu.mpp.library.model.Author;
@@ -58,5 +59,10 @@ public class SystemController implements FrontController {
 
     public List<Author> getAuthors() {
         return authorService.findAllAuthors();
+    }
+
+    @Override
+    public void addBook(String isbn, String title, int maxCheckoutLength, List<Author> authors) throws BookAddException {
+        bookService.addBook(isbn, title, maxCheckoutLength, authors);
     }
 }

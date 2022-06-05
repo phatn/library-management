@@ -1,16 +1,48 @@
 package edu.miu.mpp.library.service;
 
+import edu.miu.mpp.library.exception.BookAddException;
 import edu.miu.mpp.library.exception.BookCheckoutException;
 import edu.miu.mpp.library.model.*;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static edu.miu.mpp.library.util.Util.isValidIsbn;
+
 public class BookService extends AbstractService {
+    private Map<String, Book> bookMap;
+    public void addBook(String isbn, String title, int maxCheckoutLength, List<Author> authors) throws BookAddException {
+        // Validate parameters
+        if (!isValidIsbn(isbn)) {
+            throw new BookAddException("Invalid ISBN number. Valid ISBN number must have 10 or 13 number digits.");
+        }
+        for (Book book : bookMap.values()) {
+            if (book.getIsbn().equals(isbn)) {
+                throw new BookAddException("A book with the ISBN existed.");
+            }
+        }
+        if (title == null || title.isEmpty()) {
+            throw new BookAddException("No title specified.");
+        }
+        if (maxCheckoutLength < 1) {
+            throw new BookAddException("Invalid max checkout length. It must be > 0.");
+        }
+        if (authors.size() < 1) {
+            throw new BookAddException("No author.");
+        }
+
+        // Create new book and save it
+        Book book = new Book(isbn, title, maxCheckoutLength, authors);
+        bookMap.put(isbn, book);
+        saveBooks(bookMap);
+    }
+
     public Map<String, Book> findAllBooks() {
-        return dataAccess.readBooksMap();
+        bookMap = dataAccess.readBooksMap();
+        return bookMap;
     }
 
     public void saveBooks(Map<String, Book> books) {
