@@ -15,7 +15,7 @@ import static edu.miu.mpp.library.util.Util.isValidIsbn;
 
 public class BookService extends AbstractService {
     private Map<String, Book> bookMap;
-    public void addBook(String isbn, String title, int maxCheckoutLength, List<Author> authors) throws BookAddException {
+    public Book addBook(String isbn, String title, int maxCheckoutLength, List<Author> authors) throws BookAddException {
         // Validate parameters
         if (!isValidIsbn(isbn)) {
             throw new BookAddException("Invalid ISBN number. Valid ISBN number must have 10 or 13 number digits.");
@@ -39,6 +39,8 @@ public class BookService extends AbstractService {
         Book book = new Book(isbn, title, maxCheckoutLength, authors);
         bookMap.put(isbn, book);
         saveBooks(bookMap);
+
+        return book;
     }
 
     public Book addBookCopy(String isbn) {

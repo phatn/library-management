@@ -62,8 +62,8 @@ public class SystemController implements FrontController {
     }
 
     @Override
-    public void addBook(String isbn, String title, int maxCheckoutLength, List<Author> authors) throws BookAddException {
-        bookService.addBook(isbn, title, maxCheckoutLength, authors);
+    public Book addBook(String isbn, String title, int maxCheckoutLength, List<Author> authors) throws BookAddException {
+        return bookService.addBook(isbn, title, maxCheckoutLength, authors);
     }
 
     @Override
