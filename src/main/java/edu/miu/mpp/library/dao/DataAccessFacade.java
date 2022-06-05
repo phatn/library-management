@@ -4,6 +4,8 @@ import edu.miu.mpp.library.model.Author;
 import edu.miu.mpp.library.model.Book;
 import edu.miu.mpp.library.model.LibraryMember;
 import edu.miu.mpp.library.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.file.FileSystems;
@@ -16,16 +18,23 @@ import java.util.Map;
 
 
 public class DataAccessFacade implements DataAccess {
-	
+
+	private static final Logger LOG = LoggerFactory.getLogger(DataAccessFacade.class);
+
 	enum StorageType {
 		BOOKS, MEMBERS, USERS, AUTHORS
 	}
 
-	public static final String OUTPUT_DIR = System.getProperty("user.dir")
-			+ File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + "edu"
-			+ File.separator + "miu" + File.separator + "mpp" + File.separator + "library" + File.separator + "dao" + File.separator + "storage";
-	public static final String DATE_PATTERN = "MM/dd/yyyy";
-	
+	public static final String STORAGE_HOME = System.getenv("STORAGE_HOME");
+
+	public static final String OUTPUT_DIR;
+
+	static {
+		LOG.info("STORAGE_HOME = {}", STORAGE_HOME);
+		OUTPUT_DIR = (STORAGE_HOME == null ? System.getProperty("user.dir") : STORAGE_HOME) + File.separator + "storage";
+		LOG.info("OUTPUT_DIR = {}", OUTPUT_DIR);
+	}
+
 	//implement: other save operations
 	public void saveNewMember(LibraryMember member) {
 		Map<String, LibraryMember> mems = readMemberMap();
