@@ -88,6 +88,11 @@ public class AddLibraryMemberWindow extends JFrame implements MessageableWindow 
             @Override
             public void actionPerformed(ActionEvent e) {
                 TableModel tblModel = memberTable.getModel();
+                if(memberTable.getSelectedRow() < 0) {
+                    displayError("There is no members selected to delete!");
+                    return;
+                }
+
                 String getMemberId = tblModel.getValueAt(memberTable.getSelectedRow(), 0).toString().strip();
                 int opt = JOptionPane.showConfirmDialog(AddLibraryMemberWindow, String.format(Strings.DELETE_MESS, getMemberId), Strings.DELETE_TITLE, JOptionPane.YES_NO_OPTION);
                 if (opt == 0) {
