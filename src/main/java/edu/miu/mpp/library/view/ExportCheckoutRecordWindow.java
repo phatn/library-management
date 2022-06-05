@@ -34,6 +34,8 @@ public class ExportCheckoutRecordWindow implements MessageableWindow {
             = {"Member ID", "ISBN", "Book Copy ID", "Checkout Date", "Due Date"};
     private ComboBoxModel model;
 
+    private String selectedItem = "";
+
     public ExportCheckoutRecordWindow() {
         populateCboData();
         tableModel = new DefaultTableModel(null, DEFAULT_COLUMN_HEADERS);
@@ -41,7 +43,7 @@ public class ExportCheckoutRecordWindow implements MessageableWindow {
         tblRecordEntry.setShowGrid(true);
         cboMemberID.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-                String selectedItem = e.getItem().toString();
+                selectedItem = e.getItem().toString();
                 clearTable(tableModel);
                 List<String[]> rows = new ArrayList<>();
                 if (!selectedItem.contains("Select")) {
@@ -59,7 +61,7 @@ public class ExportCheckoutRecordWindow implements MessageableWindow {
         });
 
         btnPrint.addActionListener(e -> {
-            printConsole(tableModel.getDataVector());
+            printConsole(tableModel.getDataVector(), selectedItem);
         });
         mainPanel.addComponentListener(new ComponentAdapter() {
             @Override
@@ -163,15 +165,7 @@ public class ExportCheckoutRecordWindow implements MessageableWindow {
         }
     }
 
-    private void printConsole(Vector<Vector> allRows) {
-        /*
-        System.out.println("---------------------------------------------------------------------------------------");
-        System.out.printf("%10s %15s %15s %20s %20s", "MEMBER ID", "ISBN", "BOOK COPY ID", "CHECKOUT DATE", "DUE DATE");
-        System.out.println();
-        System.out.println("---------------------------------------------------------------------------------------");
-
-
-         */
+    private void printConsole(Vector<Vector> allRows, String libraryMember) {
         LOG.info("---------------------------------------------------------------------------------------");
         LOG.info(String.format("%10s %15s %15s %20s %20s", "MEMBER ID", "ISBN", "BOOK COPY ID", "CHECKOUT DATE", "DUE DATE"));
         LOG.info("---------------------------------------------------------------------------------------");
@@ -185,5 +179,8 @@ public class ExportCheckoutRecordWindow implements MessageableWindow {
                     colSize > 4 ? allRows.get(i).get(4) : ""));
         }
         LOG.info("---------------------------------------------------------------------------------------");
+
+        displayInfo("Checkout record entries of '" + libraryMember + "' were printed out in the console!");
     }
+
 }
