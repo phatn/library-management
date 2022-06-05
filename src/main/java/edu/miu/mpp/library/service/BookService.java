@@ -2,6 +2,7 @@ package edu.miu.mpp.library.service;
 
 import edu.miu.mpp.library.exception.BookAddException;
 import edu.miu.mpp.library.exception.BookCheckoutException;
+import edu.miu.mpp.library.exception.BookCopyAddException;
 import edu.miu.mpp.library.model.*;
 
 import java.time.LocalDate;
@@ -38,6 +39,23 @@ public class BookService extends AbstractService {
         Book book = new Book(isbn, title, maxCheckoutLength, authors);
         bookMap.put(isbn, book);
         saveBooks(bookMap);
+    }
+
+    public Book addBookCopy(String isbn) {
+        // Validate parameters
+        if (!isValidIsbn(isbn)) {
+            throw new BookCopyAddException("Invalid ISBN number. Valid ISBN number must have 10 or 13 number digits.");
+        }
+        Book book = bookMap.get(isbn);
+        if (book == null) {
+            throw new BookCopyAddException("Book does not exist.");
+        }
+
+        // Add copy
+        book.addCopy();
+        saveBooks(bookMap);
+
+        return book;
     }
 
     public Map<String, Book> findAllBooks() {

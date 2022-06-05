@@ -32,4 +32,5 @@ public interface FrontController {
     List<Author> getAuthors();
 
     void addBook(String isbn, String title, int maxCheckoutLength, List<Author> authors);
+    Book addBookCopy(String isbn);
 }

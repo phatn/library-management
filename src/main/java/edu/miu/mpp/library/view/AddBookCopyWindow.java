@@ -1,6 +1,7 @@
 package edu.miu.mpp.library.view;
 
 import edu.miu.mpp.library.controller.SystemController;
+import edu.miu.mpp.library.exception.BookCopyAddException;
 import edu.miu.mpp.library.model.Book;
 import edu.miu.mpp.library.model.BookCopy;
 
@@ -174,15 +175,17 @@ public class AddBookCopyWindow implements MessageableWindow {
         int selectedRow = bookTable.getSelectedRow();
         String selectedIsbn = (String) bookTable.getValueAt(selectedRow, 0);
         System.out.println(selectedIsbn);
-        Book book = bookMap.get(selectedIsbn);
-        if (book != null) {
-            book.addCopy();
-            updateCopy(selectedIsbn);
-            systemController.saveBooks(bookMap);
-
-            DefaultTableModel bookModel = (DefaultTableModel) bookTable.getModel();
-            bookModel.setValueAt(book.getCopies().length, selectedRow, 2);
+        Book book;
+        try {
+            book = systemController.addBookCopy(selectedIsbn);
+        } catch (BookCopyAddException ex) {
+            displayError(ex.getMessage());
+            return;
         }
+        updateCopy(selectedIsbn);
+
+        DefaultTableModel bookModel = (DefaultTableModel) bookTable.getModel();
+        bookModel.setValueAt(book.getCopies().length, selectedRow, 2);
     }
 
     private void updateCopy(String isbn) {
