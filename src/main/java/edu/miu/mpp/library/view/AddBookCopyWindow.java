@@ -7,6 +7,8 @@ import edu.miu.mpp.library.controller.SystemController;
 import edu.miu.mpp.library.exception.BookCopyAddException;
 import edu.miu.mpp.library.model.Book;
 import edu.miu.mpp.library.model.BookCopy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -23,6 +25,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AddBookCopyWindow implements MessageableWindow {
+
+    private static final Logger LOG = LoggerFactory.getLogger(AddBookCopyWindow.class);
     private JPanel mainPanel;
     private JTextField isbnTxt;
     private JTable bookTable;
@@ -145,7 +149,7 @@ public class AddBookCopyWindow implements MessageableWindow {
     }
 
     private void fillBookTableData(Map<String, Book> tableData) {
-        System.out.println(bookMap);
+        LOG.info("All Books: {}", bookMap);
         DefaultTableModel model = (DefaultTableModel) bookTable.getModel();
         model.setRowCount(0);
         for (Book book : tableData.values()) {

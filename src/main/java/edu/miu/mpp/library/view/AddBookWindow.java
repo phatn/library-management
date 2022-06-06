@@ -7,6 +7,8 @@ import edu.miu.mpp.library.controller.SystemController;
 import edu.miu.mpp.library.exception.BookAddException;
 import edu.miu.mpp.library.model.Author;
 import edu.miu.mpp.library.model.Book;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -20,11 +22,12 @@ import java.awt.event.ComponentEvent;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import static edu.miu.mpp.library.util.Util.isValidIsbn;
 
 public class AddBookWindow implements MessageableWindow {
+
+    private static final Logger LOG = LoggerFactory.getLogger(AddBookWindow.class);
     private JPanel mainPanel;
     private JTextField titleTxt;
 
@@ -90,7 +93,7 @@ public class AddBookWindow implements MessageableWindow {
                 }
             }
             Object[] row = {book.getIsbn(), book.getTitle(), sb.toString(), book.getMaxCheckoutLength(), book.getCopies().length};
-            System.out.println(Arrays.toString(row));
+            LOG.info("{}", Arrays.toString(row));
             model.addRow(row);
         }
     }
