@@ -25,7 +25,7 @@ public class DataAccessFacade implements DataAccess {
 		BOOKS, MEMBERS, USERS, AUTHORS
 	}
 
-	public static final String STORAGE_HOME = System.getenv("STORAGE_HOME");
+	public static final String STORAGE_HOME = System.getProperty("STORAGE_HOME");
 
 	public static final String OUTPUT_DIR;
 
